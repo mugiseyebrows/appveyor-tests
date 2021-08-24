@@ -2,16 +2,19 @@ branches:
   only:
     - master
 
+artifacts:
+  - path: build.log
+
 build_script:
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
   - rem add python 3.9 to path
   - set PATH=C:\Python39-x64;C:\Python39-x64\Scripts;%PATH%
   - rem add qt msvc2017 to path
   - set PATH=C:\Qt\5.14.2\msvc2017_64\bin;C:\Qt\Tools\QtCreator\bin;%PATH%
-  - python -m pip install requests
+  - python -m pip install requests >> build.log 2>&1
   - cd tests
-  - qmake
-  - jom -j4 release
+  - qmake >> ..\build.log 2>&1
+  - jom -j4 release >> ..\build.log 2>&1
   - cd ..
   - python run-tests.py
 

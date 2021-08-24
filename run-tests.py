@@ -17,6 +17,8 @@ for root, dirs, files in os.walk(tests):
             proc = sp.Popen([path, '-xunitxml'], stderr=sp.PIPE, stdout=sp.PIPE)
             stdout, stderr = proc.communicate()
 
+            print('{} returncode {}'.format(path, proc.returncode))
+
             if proc.returncode != 0:
                 fail = True
             
@@ -27,6 +29,7 @@ for root, dirs, files in os.walk(tests):
             job_id = os.environ['APPVEYOR_JOB_ID']
             url = 'https://ci.appveyor.com/api/testresults/junit/{}'.format(job_id)
             r = requests.post(url, files=files)
-            print(r.status_code, r.text)
+            #print(r.status_code, r.text)
+            print('status_code {}'.format(r.status_code))
 
 exit(1 if fail else 0)

@@ -3,5 +3,5 @@
 
 void TestFoo::test()
 {
-    QCOMPARE(1,2);
+    QCOMPARE(1,1);
 }
