@@ -1,0 +1,19 @@
+branches:
+  only:
+    - master
+
+build_script:
+  - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+  - rem add python 3.9 to path
+  - set PATH=C:\Python39-x64;C:\Python39-x64\Scripts;%PATH%
+  - rem add qt msvc2017 to path
+  - set PATH=C:\Qt\5.14.2\msvc2017_64\bin;C:\Qt\Tools\QtCreator\bin;%PATH%
+  - python run-tests.py
+
+deploy:
+  description: 'appveyor-tests'
+  provider: GitHub
+  auth_token:
+    secure: gcYWBlGRr48R9W3Snz+xXmLh1TIT/wYLnoYgdaCRlKiWA4SyZkNC3b+GZdIiyCra
+  on:
+    branch: master
