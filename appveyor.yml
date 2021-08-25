@@ -14,7 +14,7 @@ build_script:
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
   - set PATH=C:\Qt\5.14.2\msvc2017_64\bin;C:\Qt\Tools\QtCreator\bin;%PATH%
   - rem ========= build app and tests
-  - qmake
+  - qmake >> build.log 2>&1
   - jom -j4 release >> build.log 2>&1
   - cd tests
   - qmake >> ..\build.log 2>&1
