@@ -1,0 +1,1 @@
+![Build Status](https://ci.appveyor.com/api/projects/status/github/mugiseyebrows/hello-appveyor?svg=true)

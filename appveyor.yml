@@ -4,18 +4,24 @@ branches:
 
 artifacts:
   - path: build.log
+  - path: release\app.exe
 
 build_script:
-  - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
-  - rem add python 3.9 to path
+  - rem ========= python env
   - set PATH=C:\Python39-x64;C:\Python39-x64\Scripts;%PATH%
-  - rem add qt msvc2017 to path
-  - set PATH=C:\Qt\5.14.2\msvc2017_64\bin;C:\Qt\Tools\QtCreator\bin;%PATH%
   - python -m pip install requests >> build.log 2>&1
+  - rem ========= msvc-qt5 env
+  - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+  - set PATH=C:\Qt\5.14.2\msvc2017_64\bin;C:\Qt\Tools\QtCreator\bin;%PATH%
+  - rem ========= build app and tests
+  - qmake >> build.log 2>&1
+  - jom -j4 release >> build.log 2>&1
   - cd tests
   - qmake >> ..\build.log 2>&1
   - jom -j4 release >> ..\build.log 2>&1
   - cd ..
+
+test_script:
   - python run-tests.py
 
 deploy:
